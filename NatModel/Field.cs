@@ -14,6 +14,12 @@ namespace NatModel
         protected Cell[][] island;
         protected int size;
         protected List<Animal> animals;
+        private Form1 form;
+
+        public void Subscribe(Form1 _form)
+        {
+            form = _form;
+        }
 
         public Cell[][] Island { get { return island; }  }
         public void Update() {
@@ -22,6 +28,7 @@ namespace NatModel
             {
                 animal.Update();
             }
+            form.Redraw();
         }
         public void Clear() { }
 

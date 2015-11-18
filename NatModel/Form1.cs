@@ -13,23 +13,24 @@ namespace NatModel
 {
     public partial class Form1 : Form
     {
+        Field field;
+
         public Form1()
         {
             InitializeComponent();
-            var field = new Field(20);
 
-            var rabbit = new Rabbit(field);
-            rabbit.Location.Point = field.GetFreePoint();
+            field = new Field(20);
+            field.Subscribe(this);
+        }
 
-            field.AddAnimal(rabbit);
-
-            MessageBox.Show(rabbit.Location.Point.ToString());
-            field.Update();
-
-            MessageBox.Show(rabbit.Location.Point.ToString());
+        public void Redraw()
+        {
 
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
+        }
     }
 }
