@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NatModel.Components;
+using System.Drawing;
 
 namespace NatModel.Entities
 {
@@ -17,5 +18,7 @@ namespace NatModel.Entities
         {
             this.Location = new LocationComponent() { Field = field };
         }
+
+        public abstract Image GetAsset();
     }
 }

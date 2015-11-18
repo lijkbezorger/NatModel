@@ -24,6 +24,8 @@ namespace NatModel
             field = new Field(size);
             field.Subscribe(this);
 
+            field.AddAnimal(new Rabbit(field));
+
             this.Width = size * 30 + 20;
             this.Height = size * 30 + 40;
 
@@ -34,17 +36,30 @@ namespace NatModel
         private void Timer1_Tick(object sender, EventArgs e)
         {
             field.Update();
+        }
+
+        public void Redraw()
+        {
             Graphics g = CreateGraphics();
+            g.Clear(Color.White);
             for (int i = 0; i <= field.Island.Length; i++)
             {
                 g.DrawLine(Pens.Black, i * 30, 0, i * 30, field.Island.Length * 30);
                 g.DrawLine(Pens.Black, 0, i * 30, field.Island.Length * 30, i * 30);
             }
-        }
 
-        public void Redraw()
-        {
-
+            for (int i = 0; i < field.Island.Length; i++)
+            {
+                for (int j = 0; j < field.Island[0].Length; j++)
+                {
+                    Animal animal = field.Island[i][j].Animal;
+                    if (animal != null)
+                    {
+                        Rectangle rect = new Rectangle(animal.Location.Point.X * 30 + 2, animal.Location.Point.Y * 30 + 2, 28, 28);
+                        g.DrawImage(animal.GetAsset(), rect);
+                    }
+                }
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)

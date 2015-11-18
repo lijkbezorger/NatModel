@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using NatModel.Properties;
 
 namespace NatModel.Entities
 {
@@ -35,5 +36,9 @@ namespace NatModel.Entities
 
         public Rabbit(Field field) : base(field) { }
 
+        public override Image GetAsset()
+        {
+            return Resources.rabbit;
+        }
     }
 }
