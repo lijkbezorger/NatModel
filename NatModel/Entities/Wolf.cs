@@ -33,7 +33,7 @@ namespace NatModel.Entities
                         cell = Field.GetCell(new Point(Location.X + i, Location.Y + j));
                         if (cell != null)
                         {
-                            tmp = cell.Animals.FirstOrDefault(x => (x is SheWolf));
+                            tmp = cell.Animals.FirstOrDefault(x => ((x is SheWolf) && (x != this)));
                             if (tmp != null)
                             {
                                 if (i == 0 && j == 0)
@@ -60,6 +60,16 @@ namespace NatModel.Entities
                 return false;
             }
             return true;
+        }
+
+        public override void ApplyMove()
+        {
+            if (newWolf != null)
+            {
+                Field.AddAnimalAfter(newWolf);
+                newWolf = null;
+            }
+            base.ApplyMove();
         }
         public Wolf(Field field) : base(field) { }
 

@@ -28,7 +28,7 @@ namespace NatModel.Entities
         public override void ApplyMove()
         {
             base.ApplyMove();
-            var n = bornRandom.Next(5);
+            var n = bornRandom.Next(10);
 
             if (n == 1)
             {
