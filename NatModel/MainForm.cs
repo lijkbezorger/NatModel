@@ -13,7 +13,6 @@ namespace NatModel
 {
     public partial class MainForm : Form
     {
-        int hash = 0;
         Field field;
 
         public MainForm()
@@ -27,13 +26,12 @@ namespace NatModel
 
 
             this.Width = size * 30 + 20 + 200;
-            this.Height = size * 30 + 40;
+            this.Height = size * 30 + 60;
+
+            pictureBox1.Width = size * 30 + 20;
+            pictureBox1.Height = size * 30 + 20;
 
             timer1.Tick += Timer1_Tick;
-
-            DoubleBuffered = false;
-
-            // timer1.Enabled = true;
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -75,11 +73,6 @@ namespace NatModel
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             timer1.Enabled = !timer1.Enabled;
@@ -88,11 +81,6 @@ namespace NatModel
         private void button2_Click(object sender, EventArgs e)
         {
             field.Update();
-        }
-
-        private void MainForm_Paint(object sender, PaintEventArgs e)
-        {
-            Redraw(CreateGraphics());
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -116,6 +104,12 @@ namespace NatModel
         {
 
             field.AddAnimal(new Rabbit(field) { Location = field.GetFreePoint() });
+        }
+        
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            Redraw(e.Graphics);
+
         }
     }
 }

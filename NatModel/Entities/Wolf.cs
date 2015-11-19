@@ -8,12 +8,9 @@ using System.Threading.Tasks;
 
 namespace NatModel.Entities
 {
-    class Wolf:Animal
+    class Wolf : SheWolf
     {
-        protected int life = 50;
-
-        protected Animal killedRabbit;
-
+        protected Animal newWolf;
         public override string Name
         {
             get
@@ -22,75 +19,49 @@ namespace NatModel.Entities
             }
         }
 
-        protected Boolean DoLifeCycle()
+        protected override bool Hunt()
         {
-            this.life--;
-            return this.life != 0;
-        }
-
-        protected Boolean Hunt()
-        {
-            Cell cell;
-            Animal rabbit;
-
-            for (int i = -1; i <= 1; i++)
+            if (!base.Hunt())
             {
-                for (int j = -1; j <= 1; j++)
+                Cell cell;
+                Animal tmp;
+
+                for (int i = -1; i <= 1; i++)
                 {
-                    cell = Field.GetCell(new Point(Location.X + i, Location.Y + j));
-                    if (cell != null)
+                    for (int j = -1; j <= 1; j++)
                     {
-                        rabbit = cell.Animals.FirstOrDefault(x => (x is Rabbit));
-                        if (rabbit != null)
+                        cell = Field.GetCell(new Point(Location.X + i, Location.Y + j));
+                        if (cell != null)
                         {
-                            if (i == 0 && j == 0)
+                            tmp = cell.Animals.FirstOrDefault(x => (x is SheWolf));
+                            if (tmp != null)
                             {
-                                killedRabbit = rabbit;
-                                return true;
-                            }
-                            else
-                            {
-                                Offset(i, j);
-                                return true;
+                                if (i == 0 && j == 0)
+                                {
+                                    if ((new Random()).Next(2) == 1)
+                                    {
+                                        newWolf = new Wolf(Field);
+                                    }
+                                    else
+                                    {
+                                        newWolf = new SheWolf(Field);
+                                    }
+                                    return true;
+                                }
+                                else
+                                {
+                                    Offset(i, j);
+                                    return true;
+                                }
                             }
                         }
                     }
                 }
+                return false;
             }
-            return false;
+            return true;
         }
-
-        public override void Update()
-        {
-            if (DoLifeCycle())
-            {
-                if (!Hunt())
-                {
-                    Move();
-                }
-            }
-        }
-
-        public override void ApplyMove()
-        {
-            if (killedRabbit != null)
-            {
-                killedRabbit.Dead();
-                life += 10;
-                killedRabbit = null;
-            }
-            else
-            {
-                base.ApplyMove();
-            }
-
-            if (life <= 0)
-            {
-                Dead();
-            }
-        }
-
-        public Wolf(Field field) : base(field) {}
+        public Wolf(Field field) : base(field) { }
 
         public override Image GetAsset()
         {
