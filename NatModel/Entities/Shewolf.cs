@@ -22,6 +22,7 @@ namespace NatModel.Entities
 
         public override Image GetAsset()
         {
+            Resources.wolf.MakeTransparent(Color.White);
             return Resources.shewolf;
         }
     }
